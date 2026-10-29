@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="card">
+  <h2>编辑题库</h2>
+  <form method="post">
+    <div class="form-group">
+      <label>名称</label>
+      <input type="text" name="name" value="{{ row['name'] }}" required>
+    </div>
+    <div class="form-group">
+      <label>描述</label>
+      <textarea name="description">{{ row['description'] or '' }}</textarea>
+    </div>
+    <div class="form-group">
+      <label>上传者</label>
+      <input type="text" name="uploader" value="{{ row['uploader'] or '' }}">
+    </div>
+    <p class="hint" style="margin-bottom:16px">
+      题目数：{{ row['question_count'] }} · 文件大小：{{ fmt_size(row['file_size']) }}
+      · 上传时间：{{ fmt_time(row['upload_time']) }} · 下载次数：{{ row['download_count'] }}
+    </p>
+    <div style="display:flex;gap:8px">
+      <button type="submit" class="btn btn-primary">保存</button>
+      <a href="{{ url_for('admin_packages') }}" class="btn btn-secondary">取消</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

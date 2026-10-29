@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{ title }} - FloraMind 管理后台</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <div class="nav">
+    <span class="brand">🌿 FloraMind</span>
+    <a href="{{ url_for('admin_packages') }}" class="nav-link {% if active == 'packages' %}active{% endif %}">题库管理</a>
+    <a href="{{ url_for('admin_announcements') }}" class="nav-link {% if active == 'announcements' %}active{% endif %}">公告管理</a>
+    <a href="{{ url_for('admin_feedback') }}" class="nav-link {% if active == 'feedback' %}active{% endif %}">反馈管理</a>
+  </div>
+  <a href="{{ url_for('admin_logout') }}" class="nav-link">退出登录</a>
+</header>
+<main class="container">
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% for cat, msg in messages %}
+    <div class="flash flash-{{ cat }}">{{ msg }}</div>
+  {% endfor %}
+{% endwith %}
+{% block content %}{% endblock %}
+</main>
+</body>
+</html>

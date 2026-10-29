@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="card">
+  <div class="toolbar">
+    <span class="hint">用户打开 App 时会看到最新一条启用中的公告</span>
+    <a href="{{ url_for('admin_announcement_new') }}" class="btn btn-primary">+ 新建公告</a>
+  </div>
+</div>
+
+<div class="card">
+{% if not rows %}
+  <div class="empty">暂无公告。点击右上角"+ 新建公告"添加。</div>
+{% else %}
+  <table>
+    <thead>
+      <tr>
+        <th>标题</th><th>内容预览</th><th>状态</th><th>更新时间</th><th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for r in rows %}
+      {% set enabled = r['enabled'] == 1 %}
+      <tr>
+        <td><strong>{{ r['title'] }}</strong></td>
+        <td class="desc">{{ (r['content'] or '') | replace('\n', ' ') | truncate(80, True, '...') }}</td>
+        <td>
+          {% if enabled %}
+            <span class="badge badge-on">启用中</span>
+          {% else %}
+            <span class="badge badge-off">已停用</span>
+          {% endif %}
+        </td>
+        <td>{{ fmt_time(r['updated_time']) }}</td>
+        <td class="actions">
+          <form method="post" action="{{ url_for('admin_announcement_toggle', ann_id=r['id']) }}" class="inline-form">
+            <button type="submit" class="btn btn-sm {{ 'btn-secondary' if enabled else 'btn-success' }}">
+              {{ '停用' if enabled else '启用' }}
+            </button>
+          </form>
+          <a class="btn btn-sm" href="{{ url_for('admin_announcement_edit', ann_id=r['id']) }}">编辑</a>
+          <form method="post" action="{{ url_for('admin_announcement_delete', ann_id=r['id']) }}"
+                class="inline-form"
+                onsubmit="return confirm('确认删除此公告？');">
+            <button type="submit" class="btn btn-sm btn-danger">删除</button>
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% endif %}
+</div>
+{% endblock %}

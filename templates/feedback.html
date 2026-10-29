@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="card">
+  <div class="toolbar">
+    <span class="hint">共 {{ rows | length }} 条反馈</span>
+    <form method="post" action="{{ url_for('admin_feedback_clear') }}" class="inline-form"
+          onsubmit="return confirm('确认清空所有反馈？此操作不可恢复。');">
+      <button type="submit" class="btn btn-danger">清空全部反馈</button>
+    </form>
+  </div>
+</div>
+
+<div class="card">
+{% if not rows %}
+  <div class="empty">暂无反馈。</div>
+{% else %}
+  <table>
+    <thead>
+      <tr>
+        <th>时间</th><th>用户</th><th>内容</th>
+        <th>联系方式</th><th>版本</th><th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for r in rows %}
+      <tr>
+        <td>{{ fmt_time(r['created_time']) }}</td>
+        <td>{{ r['user_name'] or '匿名' }}</td>
+        <td class="content-cell">{{ r['content'] }}</td>
+        <td>{{ r['contact'] or '' }}</td>
+        <td>{{ r['app_version'] or '' }}</td>
+        <td class="actions">
+          <form method="post" action="{{ url_for('admin_feedback_delete', fb_id=r['id']) }}"
+                class="inline-form"
+                onsubmit="return confirm('确认删除这条反馈？');">
+            <button type="submit" class="btn btn-sm btn-danger">删除</button>
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% endif %}
+</div>
+{% endblock %}

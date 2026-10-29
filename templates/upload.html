@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="card">
+  <h2>上传新题库</h2>
+  <p class="hint" style="margin-bottom:16px">
+    支持包含多级目录的 ZIP，每层有 <code>questions.json</code> 即视为一个题库包。
+  </p>
+  <form method="post" enctype="multipart/form-data">
+    <div class="form-group">
+      <label>ZIP 文件 *</label>
+      <input type="file" name="file" accept=".zip" required>
+    </div>
+    <div class="form-group">
+      <label>题库名称（可选，默认使用文件名）</label>
+      <input type="text" name="name" placeholder="例如：植物学基础">
+    </div>
+    <div class="form-group">
+      <label>描述（可选）</label>
+      <textarea name="description" placeholder="简单描述这个题库..."></textarea>
+    </div>
+    <div class="form-group">
+      <label>上传者（可选）</label>
+      <input type="text" name="uploader" placeholder="你的名字或 ID">
+    </div>
+    <div style="display:flex;gap:8px">
+      <button type="submit" class="btn btn-primary">上传</button>
+      <a href="{{ url_for('admin_packages') }}" class="btn btn-secondary">取消</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

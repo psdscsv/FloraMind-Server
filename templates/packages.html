@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="card">
+  <div class="toolbar">
+    <form method="get" class="search-form">
+      <input type="text" name="q" value="{{ keyword }}" placeholder="搜索题库名称或描述...">
+      <button type="submit" class="btn">搜索</button>
+      <a href="{{ url_for('admin_packages') }}" class="btn btn-secondary">重置</a>
+    </form>
+    <a href="{{ url_for('admin_package_upload_form') }}" class="btn btn-primary">+ 上传题库</a>
+  </div>
+</div>
+
+<div class="card">
+{% if not rows %}
+  <div class="empty">暂无题库。点击右上角"+ 上传题库"添加。</div>
+{% else %}
+  <table>
+    <thead>
+      <tr>
+        <th>名称</th><th>描述</th><th>题数</th><th>大小</th>
+        <th>上传者</th><th>下载</th><th>上传时间</th><th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for r in rows %}
+      <tr>
+        <td><strong>{{ r['name'] }}</strong></td>
+        <td class="desc">{{ r['description'] or '' }}</td>
+        <td>{{ r['question_count'] }}</td>
+        <td>{{ fmt_size(r['file_size']) }}</td>
+        <td>{{ r['uploader'] or '' }}</td>
+        <td>{{ r['download_count'] }}</td>
+        <td>{{ fmt_time(r['upload_time']) }}</td>
+        <td class="actions">
+          <a class="btn btn-sm btn-secondary" href="{{ url_for('admin_package_download', pkg_id=r['id']) }}">下载</a>
+          <a class="btn btn-sm" href="{{ url_for('admin_package_edit', pkg_id=r['id']) }}">编辑</a>
+          <form method="post" action="{{ url_for('admin_package_delete', pkg_id=r['id']) }}"
+                class="inline-form"
+                onsubmit="return confirm('确认删除《' + this.dataset.name + '》？此操作不可恢复。');"
+                data-name="{{ r['name'] }}">
+            <button type="submit" class="btn btn-sm btn-danger">删除</button>
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>登录 - FloraMind 管理后台</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="login-body">
+<div class="login-card">
+  <h1>🌿 FloraMind 管理后台</h1>
+  {% if error_msg %}<div class="flash flash-error">{{ error_msg }}</div>{% endif %}
+  <form method="post">
+    <div class="form-group">
+      <label>管理员令牌</label>
+      <input type="password" name="token" autofocus required>
+    </div>
+    <button type="submit" class="btn btn-primary" style="width:100%">登 录</button>
+  </form>
+</div>
+</body>
+</html>

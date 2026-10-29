@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="card">
+  <h2>{{ "新建公告" if is_new else "编辑公告" }}</h2>
+  <form method="post" action="{{ action_url }}">
+    <div class="form-group">
+      <label>标题 *</label>
+      <input type="text" name="title" value="{{ row['title'] if row else '' }}" required
+             placeholder="例如：v1.1 更新公告">
+    </div>
+    <div class="form-group">
+      <label>内容 *</label>
+      <textarea name="content" required
+                placeholder="公告正文，支持换行分段。">{{ row['content'] if row else '' }}</textarea>
+    </div>
+    <div class="form-group">
+      <label>
+        <input type="checkbox" name="enabled" value="1"
+               {% if is_new or (row and row['enabled'] == 1) %}checked{% endif %}>
+        启用（启用后用户打开 App 才会看到此公告）
+      </label>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button type="submit" class="btn btn-primary">保存</button>
+      <a href="{{ url_for('admin_announcements') }}" class="btn btn-secondary">取消</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

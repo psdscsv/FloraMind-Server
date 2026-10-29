@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a3f3c643-4e72-46fa-9b5e-759f7d08f0fd" name="更改" comment="1">
+    <list default="true" id="a3f3c643-4e72-46fa-9b5e-759f7d08f0fd" name="更改" comment="增加了管理页面">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
@@ -78,7 +78,9 @@
       <workItem from="1793196558849" duration="707000" />
       <workItem from="1793198110889" duration="278000" />
       <workItem from="1793198585856" duration="773000" />
-      <workItem from="1793199473906" duration="322000" />
+      <workItem from="1793199473906" duration="1755000" />
+      <workItem from="1793267320860" duration="299000" />
+      <workItem from="1793270167199" duration="341000" />
     </task>
     <task id="LOCAL-00001" summary="1">
       <option name="closed" value="true" />
@@ -88,7 +90,15 @@
       <option name="project" value="LOCAL" />
       <updated>1793196789226</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="增加了管理页面">
+      <option name="closed" value="true" />
+      <created>1793199907633</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1793199907633</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -96,9 +106,10 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="1" />
-    <option name="LAST_COMMIT_MESSAGE" value="1" />
+    <MESSAGE value="增加了管理页面" />
+    <option name="LAST_COMMIT_MESSAGE" value="增加了管理页面" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/floramind_server$main.coverage" NAME="main 覆盖结果" MODIFIED="1793199746602" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/floramind_server$main.coverage" NAME="main 覆盖结果" MODIFIED="1793270441865" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
