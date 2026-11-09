@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 FloraMind 题库服务器 - 增强版
-含：题库管理、反馈管理、公告管理（网页后台）
+含：主入口展示页、题库管理、反馈管理、公告管理（网页后台）
 
 依赖:
     pip install flask flask-cors
@@ -11,10 +11,11 @@ FloraMind 题库服务器 - 增强版
     python main.py
 
 环境变量:
-    FM_ADMIN_TOKEN   管理员令牌（默认 change-me-admin-token）
+    FM_ADMIN_TOKEN   管理员令牌（默认 动植智记）
     FM_SECRET_KEY    session 加密密钥（生产必须改）
+    FM_HTTPS         设为 1 时启用 Secure Cookie（部署 HTTPS 后建议开启）
 
-模板文件位于 templates/ 目录，样式位于 static/style.css。
+模板文件位于 templates/ 目录，样式位于 static/style.css 与 static/home.css。
 """
 import os
 import json
@@ -30,6 +31,7 @@ from flask import (
     render_template,
 )
 from flask_cors import CORS
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 UPLOAD_DIR = os.path.join(BASE_DIR, "uploads")
@@ -43,6 +45,20 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 app = Flask(__name__)
 app.config["MAX_CONTENT_LENGTH"] = 200 * 1024 * 1024
 app.secret_key = SECRET_KEY
+
+# 反向代理（Nginx）修正：让 Flask 正确识别 https / host / 客户端 IP
+app.wsgi_app = ProxyFix(
+    app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_port=1, x_prefix=1
+)
+
+# 部署 HTTPS 后，通过环境变量 FM_HTTPS=1 启用安全 Cookie
+if os.environ.get("FM_HTTPS", "0") == "1":
+    app.config.update(
+        SESSION_COOKIE_SECURE=True,
+        SESSION_COOKIE_HTTPONLY=True,
+        SESSION_COOKIE_SAMESITE="Lax",
+    )
+
 CORS(app)
 
 
@@ -199,6 +215,38 @@ def do_upload(file_storage, name, description, uploader):
     )
     db.commit()
     return pkg_id, q_count, None
+
+
+# ============================================================
+#                    主入口展示页
+# ============================================================
+@app.route("/", methods=["GET"])
+def home():
+    keyword = (request.args.get("q") or "").strip()
+    db = get_db()
+    if keyword:
+        packages = db.execute(
+            "SELECT * FROM packages WHERE name LIKE ? OR description LIKE ? "
+            "ORDER BY upload_time DESC",
+            (f"%{keyword}%", f"%{keyword}%"),
+        ).fetchall()
+    else:
+        packages = db.execute(
+            "SELECT * FROM packages ORDER BY upload_time DESC"
+        ).fetchall()
+
+    announcement = db.execute(
+        "SELECT * FROM announcements WHERE enabled = 1 "
+        "ORDER BY updated_time DESC LIMIT 1"
+    ).fetchone()
+
+    return render_template(
+        "index.html",
+        title="首页",
+        packages=packages,
+        keyword=keyword,
+        announcement=announcement,
+    )
 
 
 # ============================================================
