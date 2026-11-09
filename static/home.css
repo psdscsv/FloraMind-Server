@@ -26,7 +26,14 @@ a { text-decoration: none; color: inherit; }
   max-width: 1100px; margin: 0 auto; padding: 12px 20px;
   display: flex; align-items: center; justify-content: space-between;
 }
-.logo { font-weight: 700; font-size: 18px; color: var(--primary-dark); }
+.logo {
+  display: flex; align-items: center; gap: 8px;
+  font-weight: 700; font-size: 18px; color: var(--primary-dark);
+}
+.logo img {
+  width: 30px; height: 30px; border-radius: 9px;
+  display: block; flex-shrink: 0;
+}
 .nav-inner nav { display: flex; gap: 6px; align-items: center; }
 .nav-inner nav a {
   padding: 8px 14px; border-radius: 999px; color: var(--muted); font-size: 14px;
@@ -47,7 +54,12 @@ a { text-decoration: none; color: inherit; }
 .hero-text h1 { font-size: 36px; margin: 0 0 12px; }
 .hero-text p { color: var(--muted); max-width: 520px; }
 .hero-actions { display: flex; gap: 12px; margin-top: 22px; flex-wrap: wrap; }
-.hero-art { font-size: 120px; line-height: 1; }
+.hero-art { line-height: 1; }
+.hero-art img {
+  width: 180px; height: 180px; border-radius: 36px;
+  display: block;
+  box-shadow: 0 12px 40px rgba(52, 152, 219, .22);
+}
 
 /* 按钮 */
 .btn {
@@ -95,7 +107,11 @@ a { text-decoration: none; color: inherit; }
 .pkg-icon {
   width: 54px; height: 54px; border-radius: 14px; flex-shrink: 0;
   background: linear-gradient(135deg, #e3f2fd, #e8f5e9);
-  display: flex; align-items: center; justify-content: center; font-size: 26px;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.pkg-icon img {
+  width: 34px; height: 34px; border-radius: 8px; display: block;
 }
 .pkg-body { flex: 1; min-width: 0; }
 .pkg-body h3 { margin: 0 0 4px; font-size: 16px; }
@@ -157,7 +173,7 @@ a { text-decoration: none; color: inherit; }
   .hero-inner { flex-direction: column; text-align: center; }
   .hero-text p { margin: 0 auto; }
   .hero-actions { justify-content: center; }
-  .hero-art { font-size: 80px; }
+  .hero-art img { width: 120px; height: 120px; border-radius: 26px; }
   .hero-text h1 { font-size: 28px; }
   .form-row { grid-template-columns: 1fr; }
   .nav-inner { padding: 10px 14px; }

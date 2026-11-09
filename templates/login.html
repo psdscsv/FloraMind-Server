@@ -4,11 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>登录 - FloraMind 管理后台</title>
+<link rel="icon" type="image/png" href="{{ url_for('static', filename='icon.png') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body class="login-body">
 <div class="login-card">
-  <h1>🌿 FloraMind 管理后台</h1>
+  <img src="{{ url_for('static', filename='icon.png') }}" alt="FloraMind" class="login-logo">
+  <h1>FloraMind 管理后台</h1>
   {% if error_msg %}<div class="flash flash-error">{{ error_msg }}</div>{% endif %}
   <form method="post">
     <div class="form-group">

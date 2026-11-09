@@ -4,12 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{{ title }} - FloraMind 管理后台</title>
+<link rel="icon" type="image/png" href="{{ url_for('static', filename='icon.png') }}">
+<link rel="apple-touch-icon" href="{{ url_for('static', filename='icon.png') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 <header class="topbar">
   <div class="nav">
-    <span class="brand">🌿 FloraMind</span>
+    <span class="brand">
+      <img src="{{ url_for('static', filename='icon.png') }}" alt="FloraMind" class="brand-logo">
+      FloraMind
+    </span>
     <a href="{{ url_for('admin_packages') }}" class="nav-link {% if active == 'packages' %}active{% endif %}">题库管理</a>
     <a href="{{ url_for('admin_announcements') }}" class="nav-link {% if active == 'announcements' %}active{% endif %}">公告管理</a>
     <a href="{{ url_for('admin_feedback') }}" class="nav-link {% if active == 'feedback' %}active{% endif %}">反馈管理</a>

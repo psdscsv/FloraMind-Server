@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="FloraMind 动植智记 - 植物与动物知识题库下载">
+<title>{{ title }} - FloraMind 动植智记</title>
+<link rel="icon" type="image/png" href="{{ url_for('static', filename='icon.png') }}">
+<link rel="apple-touch-icon" href="{{ url_for('static', filename='icon.png') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-inner">
+    <a class="logo" href="{{ url_for('home') }}">
+      <img src="{{ url_for('static', filename='icon.png') }}" alt="FloraMind">
+      FloraMind
+    </a>
+    <nav>
+      <a href="#packages">题库</a>
+      <a href="#announcement">公告</a>
+      <a href="#feedback">反馈</a>
+      <a href="{{ url_for('admin_login') }}" class="admin-link">管理</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <h1>动植智记 · FloraMind</h1>
+      <p>植物与动物知识题库，随时随地学习。选择一个题库包下载，导入 App 即可开始刷题。</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary btn-lg" href="#packages">浏览题库</a>
+        <a class="btn btn-ghost btn-lg" href="#feedback">提交反馈</a>
+      </div>
+    </div>
+    <div class="hero-art">
+      <img src="{{ url_for('static', filename='icon.png') }}" alt="FloraMind">
+    </div>
+  </div>
+</section>
+
+{% if announcement %}
+<section class="section" id="announcement">
+  <div class="announce-card">
+    <span class="announce-badge">公告</span>
+    <div class="announce-body">
+      <h3>{{ announcement['title'] }}</h3>
+      <p>{{ announcement['content'] }}</p>
+      <small>{{ fmt_time(announcement['updated_time']) }}</small>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section class="section" id="packages">
+  <div class="section-head">
+    <h2>题库推荐</h2>
+    <form class="search" method="get" action="{{ url_for('home') }}">
+      <input type="text" name="q" value="{{ keyword }}" placeholder="搜索题库...">
+      <button type="submit">搜索</button>
+    </form>
+  </div>
+
+  <div class="grid">
+  {% for p in packages %}
+    <article class="pkg-card">
+      <div class="pkg-icon">
+        <img src="{{ url_for('static', filename='icon.png') }}" alt="">
+      </div>
+      <div class="pkg-body">
+        <h3>{{ p['name'] }}</h3>
+        {% if p['description'] %}<p class="pkg-desc">{{ p['description'] }}</p>{% endif %}
+        <div class="pkg-meta">
+          <span>{{ p['question_count'] }} 题</span>
+          <span>{{ fmt_size(p['file_size']) }}</span>
+          <span>{{ p['download_count'] }} 次下载</span>
+        </div>
+      </div>
+      <a class="btn btn-primary pkg-dl" href="{{ url_for('download_package', pkg_id=p['id']) }}">下载</a>
+    </article>
+  {% else %}
+    <div class="empty">暂无题库{% if keyword %}（没有匹配「{{ keyword }}」的结果）{% endif %}</div>
+  {% endfor %}
+  </div>
+</section>
+
+<section class="section" id="feedback">
+  <div class="section-head"><h2>意见反馈</h2></div>
+  <div class="feedback-card">
+    <form id="feedback-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label>昵称（可选）</label>
+          <input type="text" name="userName" placeholder="怎么称呼你">
+        </div>
+        <div class="form-group">
+          <label>联系方式（可选）</label>
+          <input type="text" name="contact" placeholder="邮箱 / QQ / 微信">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>反馈内容 *</label>
+        <textarea name="content" required placeholder="遇到的问题或建议..."></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">提交反馈</button>
+    </form>
+  </div>
+</section>
+
+<footer class="footer">
+  FloraMind · 动植智记 &nbsp;|&nbsp;
+  <a href="{{ url_for('admin_login') }}">管理员入口</a>
+</footer>
+
+<div id="toast" class="toast"></div>
+
+<script>
+(function () {
+  var form = document.getElementById('feedback-form');
+  var toast = document.getElementById('toast');
+  var timer = null;
+
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(timer);
+    timer = setTimeout(function () { toast.classList.remove('show'); }, 2200);
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var data = Object.fromEntries(new FormData(form).entries());
+    fetch('/api/feedback', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (json) {
+        if (json.success) {
+          showToast('感谢反馈！');
+          form.reset();
+        } else {
+          showToast(json.message || '提交失败');
+        }
+      })
+      .catch(function () { showToast('网络错误，请稍后再试'); });
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -7,7 +7,12 @@ a:hover { text-decoration: underline; }
 .topbar { background: #2c3e50; color: #fff; padding: 0 24px; display: flex;
           justify-content: space-between; align-items: center; height: 56px; }
 .topbar .nav { display: flex; align-items: center; gap: 4px; }
-.topbar .brand { font-weight: 600; margin-right: 24px; font-size: 15px; }
+.topbar .brand { display: flex; align-items: center; gap: 8px;
+                 font-weight: 600; margin-right: 24px; font-size: 15px; }
+.topbar .brand-logo {
+  width: 26px; height: 26px; border-radius: 7px;
+  display: block; flex-shrink: 0;
+}
 .topbar a.nav-link { color: rgba(255,255,255,0.85); padding: 6px 12px; border-radius: 4px; }
 .topbar a.nav-link:hover { background: rgba(255,255,255,0.1); text-decoration: none; }
 .topbar a.nav-link.active { background: rgba(255,255,255,0.18); color: #fff; }
@@ -70,3 +75,9 @@ textarea { resize: vertical; min-height: 120px; font-family: inherit; }
 .login-card { background: #fff; border-radius: 10px; padding: 40px; width: 360px;
               box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
 .login-card h1 { font-size: 20px; text-align: center; margin-bottom: 24px; }
+
+.login-logo {
+  display: block; width: 64px; height: 64px;
+  margin: 0 auto 16px; border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(52, 152, 219, .25);
+}
