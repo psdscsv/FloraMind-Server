@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="FloraMind 动植智记 - 植物与动物知识题库下载">
-<title>{{ title }} - FloraMind 动植智记</title>
+<meta name="description" content="FloraMind 植动智记 - 植物与动物知识题库下载">
+<title>{{ title }} - FloraMind 植动智记</title>
 <link rel="icon" type="image/png" href="{{ url_for('static', filename='icon.png') }}">
 <link rel="apple-touch-icon" href="{{ url_for('static', filename='icon.png') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}?v=2">
 </head>
 <body>
 
@@ -29,7 +29,7 @@
 <section class="hero">
   <div class="hero-inner">
     <div class="hero-text">
-      <h1>动植智记 · FloraMind</h1>
+      <h1>植动智记 · FloraMind</h1>
       <p>植物与动物知识题库，随时随地学习。选择一个题库包下载，导入 App 即可开始刷题。</p>
       <div class="hero-actions">
         <a class="btn btn-primary btn-lg" href="#packages">浏览题库</a>
@@ -111,7 +111,17 @@
 </section>
 
 <footer class="footer">
-  FloraMind · 动植智记 &nbsp;|&nbsp;
+  FloraMind · 植动智记 &nbsp;|&nbsp; 
+<a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank" rel="noopener noreferrer">
+      粤ICP备2026174309号-1
+    </a>
+	 &nbsp;|&nbsp;
+<a href="https://beian.mps.gov.cn/#/query/webSearch?code=44011302006169" rel="noreferrer" target="_blank">
+      <img src="https://beian.mps.gov.cn/img/logo01.dd7ff50e.png"
+         style="vertical-align:middle;width:14px;height:14px;margin-right:3px;"
+         alt="公安备案">
+  粤公网安备44011302006169号</a>
+&nbsp;|&nbsp;
   <a href="{{ url_for('admin_login') }}">管理员入口</a>
 </footer>
 
